@@ -30,17 +30,23 @@ var getData = (robot) => {
         .get()
 }
 
-const printItem = (res, item) => res.send(`${item.traderName} (${item.byline})`)
-const printItemWithDate = (res, item) => res.send(`${item.traderName} (${item.byline}) @ ${item.startDate.split('T')[0]}`)
+const printItem = (res, item) => res.send(`*${item.traderName}* (${item.byline})`)
+const printItemWithDate = (res, item) => res.send(`${item.startDate.split('T')[0]} - *${item.traderName}* (${item.byline})`)
 
 module.exports = (robot) => {
+
+    // HELP
+    robot.respond(/help/igm, (res) => {
+        res.send("week - all the food trucks for the week")
+        res.send("today - all the food trucks for today")
+        res.send("tomorrow - all the food trucks for tomorrow")
+    })
 
     // WEEK
     robot.respond(/week/igm, (res) => {
         getData(robot)((err, resp, body) => {
             const items = JSON.parse(body)
                 .filter(f => f.isLabel == false)
-                // .filter(f => isDateToday(parseDate(f.startDate)))
 
             if (items.length == 0) {
                 res.send("No items")
@@ -65,7 +71,7 @@ module.exports = (robot) => {
         })
     })
 
-    // TODAY
+    // TOMORROW
     robot.respond(/tomorrow/igm, (res) => {
         getData(robot)((err, resp, body) => {
             const items = JSON.parse(body)
