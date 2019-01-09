@@ -5,25 +5,25 @@
 </p>
 
 
-## help
+# help
 
 <p align="center">
   <img src="extras/help.png" width="100%" />
 </p>
 
-## Food trucks for the week
+# Food trucks for the week
 
 <p align="center">
   <img src="extras/week.png" width="100%" />
 </p>
 
-## Today
+# Today
 
 <p align="center">
   <img src="extras/today.png" width="100%" />
 </p>
 
-## Tomorrow
+# Tomorrow
 
 <p align="center">
   <img src="extras/tomorrow.png" width="100%" />
