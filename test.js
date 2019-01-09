@@ -34,28 +34,13 @@ const client = got.extend({
 
 client.get('')
     .then(response => {
-        // const items = JSON.parse(response.body)
-        //     .filter(f => f.isLabel == false)
-
-        // items
-        //     .filter(f => isDateToday(parseDate(f.startDate)))
-        //     .forEach(item => {
-        //         log(`${item.traderName} (${item.byline}) @ ${item.startDate}`) // 
-        //     })
         const items = JSON.parse(response.body).filter(f => f.isLabel == false)
-
-        // res.send(parseDate("2019-01-11T00:00:00"))
 
         if (items.size == 0) {
             res.send("empty")
         } else {
-            items
-            // .map(f => res.send(parseDate(f.startDate)))
-            // .filter(f => isDateToday(parseDate(f.startDate)))
-                .forEach(item => {
-                // log(`${item.traderName} (${item.byline}) @ ${item.startDate}`)
-                log(`${item.traderName} (${item.byline})`) // @ ${item.startDate}
-            })
+            const out = items.reduce((acc, item) => acc + `${item.traderName} (${item.byline})\n`, "")
+            log(out)
         }
     })
 

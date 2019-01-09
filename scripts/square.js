@@ -30,8 +30,8 @@ var getData = (robot) => {
         .get()
 }
 
-const printItem = (res, item) => res.send(`*${item.traderName}* (${item.byline})`)
-const printItemWithDate = (res, item) => res.send(`${item.startDate.split('T')[0]} - *${item.traderName}* (${item.byline})`)
+const getItemText = (item) => `*${item.traderName}* (${item.byline})\n`
+const getItemTextWithDate = (item) => `${item.startDate.split('T')[0]} - *${item.traderName}* (${item.byline})\n`
 
 module.exports = (robot) => {
 
@@ -51,7 +51,7 @@ module.exports = (robot) => {
             if (items.length == 0) {
                 res.send("No items")
             } else {
-                items.forEach(item => printItemWithDate(res, item))
+                res.send(items.reduce((acc, item) => acc + getItemTextWithDate(item), ""))
             }
         })
     })
@@ -66,7 +66,8 @@ module.exports = (robot) => {
             if (items.length == 0) {
                 res.send("No items")
             } else {
-                items.forEach(item => printItem(res, item))
+                items.forEach(item => getItemText(res, item))
+                res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
             }
         })
     })
@@ -81,7 +82,7 @@ module.exports = (robot) => {
             if (items.length == 0) {
                 res.send("No items")
             } else {
-                items.forEach(item => printItem(res, item))
+                res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
             }
         })
     })
