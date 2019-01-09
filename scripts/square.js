@@ -37,9 +37,9 @@ module.exports = (robot) => {
 
     // HELP
     robot.respond(/help/igm, (res) => {
-        res.send("week - all the food trucks for the week")
-        res.send("today - all the food trucks for today")
-        res.send("tomorrow - all the food trucks for tomorrow")
+        res.send("*week* - all the food trucks for the week\n" +
+            "*today* - all the food trucks for today\n" +
+            "*tomorrow* - all the food trucks for tomorrow")
     })
 
     // WEEK
