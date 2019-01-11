@@ -49,7 +49,7 @@ module.exports = (robot) => {
                 .filter(f => f.isLabel == false)
 
             if (items.length == 0) {
-                res.send("No items")
+                res.send("No food trucks available")
             } else {
                 res.send(items.reduce((acc, item) => acc + getItemTextWithDate(item), ""))
             }
@@ -64,10 +64,26 @@ module.exports = (robot) => {
                 .filter(f => isDateToday(parseDate(f.startDate)))
 
             if (items.length == 0) {
-                res.send("No items")
+                res.send("No food trucks available")
             } else {
-                items.forEach(item => getItemText(res, item))
+                items.forEach(item => getItemText(item))
                 res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
+            }
+        })
+    })
+
+    // TODAY
+    robot.respond(/suggestion/igm, (res) => {
+        getData(robot)((err, resp, body) => {
+            const items = JSON.parse(body)
+                .filter(f => f.isLabel == false)
+                .filter(f => isDateToday(parseDate(f.startDate)))
+
+            if (items.length == 0) {
+                res.send("No food trucks available")
+            } else {
+                var randomItem = items.sort(function() { return 0.5 - Math.random() })[0];
+                res.send("Today's chef's suggestion: " + getItemText(randomItem))
             }
         })
     })
@@ -80,7 +96,7 @@ module.exports = (robot) => {
                 .filter(f => isDateTomorrow(parseDate(f.startDate)))
 
             if (items.length == 0) {
-                res.send("No items")
+                res.send("No food trucks available")
             } else {
                 res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
             }
