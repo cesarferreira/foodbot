@@ -10,6 +10,24 @@ var currentDate = () => {
     return today
 }
 
+var getWeekNumber = (d) => {
+    // Copy date so don't modify original
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    // Return array of year and week number
+    return [d.getUTCFullYear(), weekNo];
+}
+
+var isDateWednesday = (date) => date.getDay() == 3
+
+var isKerbfoodDay = (date) => getWeekNumber(date)[1] % 2 == 0 && isDateWednesday(date)
+
 var getTomorrow = () => {
     var today = new Date();
     var tomorrow = new Date();
@@ -64,7 +82,11 @@ module.exports = (robot) => {
                 .filter(f => isDateToday(parseDate(f.startDate)))
 
             if (items.length == 0) {
-                res.send("No food trucks available")
+                if (isKerbfoodDay(currentDate())) {
+                    res.send("kerb food day: https://www.kerbfood.com/markets/paddington/")
+                } else {
+                    res.send("No food trucks available")
+                }
             } else {
                 items.forEach(item => getItemText(item))
                 res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
@@ -96,7 +118,11 @@ module.exports = (robot) => {
                 .filter(f => isDateTomorrow(parseDate(f.startDate)))
 
             if (items.length == 0) {
-                res.send("No food trucks available")
+                if (isKerbfoodDay(getTomorrow())) {
+                    res.send("kerb food day: https://www.kerbfood.com/markets/paddington/")
+                } else {
+                    res.send("No food trucks available")
+                }
             } else {
                 res.send(items.reduce((acc, item) => acc + getItemText(item), ""))
             }
