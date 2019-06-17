@@ -63,6 +63,12 @@ module.exports = (robot) => {
     // WEEK
     robot.respond(/week/igm, (res) => {
         getData(robot)((err, resp, body) => {
+
+            if (err) {
+                res.send(err)
+                return
+            }
+
             const items = JSON.parse(body)
                 .filter(f => f.isLabel == false)
 
@@ -77,6 +83,12 @@ module.exports = (robot) => {
     // TODAY
     robot.respond(/today/igm, (res) => {
         getData(robot)((err, resp, body) => {
+
+            if (err) {
+                res.send(err)
+                return
+            }
+
             const items = JSON.parse(body)
                 .filter(f => f.isLabel == false)
                 .filter(f => isDateToday(parseDate(f.startDate)))
@@ -113,6 +125,12 @@ module.exports = (robot) => {
     // TOMORROW
     robot.respond(/tomorrow/igm, (res) => {
         getData(robot)((err, resp, body) => {
+
+            if (err) {
+                res.send(err)
+                return
+            }
+
             const items = JSON.parse(body)
                 .filter(f => f.isLabel == false)
                 .filter(f => isDateTomorrow(parseDate(f.startDate)))
