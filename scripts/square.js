@@ -83,15 +83,16 @@ module.exports = (robot) => {
     // TODAY
     robot.respond(/today/igm, (res) => {
         getData(robot)((err, resp, body) => {
-            log(err)
-            log(resp)
 
-            if (err) {
+            var parsedData = {}
+            try {
+                parsedData = JSON.parse(body)
+            } catch (error) {
                 res.send(err)
                 return
             }
 
-            const items = JSON.parse(body)
+            const items = parsedData
                 .filter(f => f.isLabel == false)
                 .filter(f => isDateToday(parseDate(f.startDate)))
 
