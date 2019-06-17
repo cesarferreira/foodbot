@@ -63,13 +63,18 @@ module.exports = (robot) => {
     // WEEK
     robot.respond(/week/igm, (res) => {
         getData(robot)((err, resp, body) => {
-            log(err)
-            if (err) {
-                res.send(err)
+            var parsedData = {}
+            try {
+                log("trying to parse data")
+                parsedData = JSON.parse(body)
+                log("data parsed")
+            } catch (error) {
+                log("catched an error")
+                res.send(`Catched an error: ${error}`)
                 return
             }
 
-            const items = JSON.parse(body)
+            const items = parsedData
                 .filter(f => f.isLabel == false)
 
             if (items.length == 0) {
@@ -86,9 +91,12 @@ module.exports = (robot) => {
 
             var parsedData = {}
             try {
+                log("trying to parse data")
                 parsedData = JSON.parse(body)
+                log("data parsed")
             } catch (error) {
-                res.send(err)
+                log("catched an error")
+                res.send(`Catched an error: ${error}`)
                 return
             }
 
@@ -129,12 +137,18 @@ module.exports = (robot) => {
     robot.respond(/tomorrow/igm, (res) => {
         getData(robot)((err, resp, body) => {
 
-            if (err) {
-                res.send(err)
+            var parsedData = {}
+            try {
+                log("trying to parse data")
+                parsedData = JSON.parse(body)
+                log("data parsed")
+            } catch (error) {
+                log("catched an error")
+                res.send(`Catched an error: ${error}`)
                 return
             }
 
-            const items = JSON.parse(body)
+            const items = parsedData
                 .filter(f => f.isLabel == false)
                 .filter(f => isDateTomorrow(parseDate(f.startDate)))
 
