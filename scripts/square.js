@@ -84,6 +84,7 @@ module.exports = (robot) => {
     robot.respond(/today/igm, (res) => {
         getData(robot)((err, resp, body) => {
             log(err)
+            log(resp)
 
             if (err) {
                 res.send(err)
