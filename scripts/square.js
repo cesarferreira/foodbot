@@ -63,7 +63,7 @@ module.exports = (robot) => {
     // WEEK
     robot.respond(/week/igm, (res) => {
         getData(robot)((err, resp, body) => {
-
+            log(err)
             if (err) {
                 res.send(err)
                 return
@@ -83,6 +83,7 @@ module.exports = (robot) => {
     // TODAY
     robot.respond(/today/igm, (res) => {
         getData(robot)((err, resp, body) => {
+            log(err)
 
             if (err) {
                 res.send(err)
