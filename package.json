@@ -5,7 +5,7 @@
     "author": "Cesar Ferreira <cesar.manuel.ferreira@gmail.com>",
     "description": "A simple helpful robot for your Company",
     "dependencies": {
-        "got": "^9.5.0",
+        "got": "^11.8.5",
         "hubot": "^3.1.1",
         "hubot-business-cat": "^1.5.14",
         "hubot-diagnostics": "^1.0.0",
